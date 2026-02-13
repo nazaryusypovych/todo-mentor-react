@@ -1,11 +1,11 @@
-import type {todoType} from "../model/TodoType.ts";
+import type {todoResponseType} from "../model/TodoType.ts";
 
 
 
 
 
 export const todoServices = {
-    getTodos: async (page:number=1):Promise<todoType[]> =>{
+    getTodos: async (page:number=1):Promise<todoResponseType> =>{
         return await fetch(`http://localhost:3000/todos?`+ `page=` + page)
             .then(response => response.json())
     },

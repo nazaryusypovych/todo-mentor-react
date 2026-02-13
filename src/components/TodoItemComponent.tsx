@@ -12,7 +12,7 @@ const TodoItemComponent: FC <todoPropsType> = ({item}) => {
 
             <div className="todo">
                 <label htmlFor="check-lable">
-                    <input  type="checkbox" id="check-lable" checked={item.completed}/>
+                    {/*<input  type="checkbox" id="check-lable" checked={item.completed}/>*/}
                     {item.text}
                 </label>
                 <div className="todo-button">
