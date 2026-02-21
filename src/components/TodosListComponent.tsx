@@ -9,6 +9,7 @@ const TodosListComponent = () => {
 
 
     const [data, setData] = useState <todoResponseType>();
+    const [newItemText, setNewItemText] = useState <string>(``);
 
     //Працює коли завантається сторінка
     useEffect(() =>{
@@ -24,18 +25,43 @@ const TodosListComponent = () => {
 
     }
 
+    const handleItemDelete = (id: number) =>{
+        todoServices.deleteTodo(id).
+        then(()=>{handlePageChange(1)})
+
+    }
+
+    const handleCreateItem = (e:React.FormEvent) =>{
+    e.preventDefault();
+    todoServices.createTodo(newItemText).
+    then(()=>{handlePageChange(1)});
+
+    }
+
 
     return (
         <div>
+            <form  id="todoForm" name="todoForm">
+                    <textarea id="text" placeholder="Text" onChange={(e)=>{
+                        setNewItemText(e.target.value)
+                    }}
+                    ></textarea>
+                <div className="row">
+                    <button onClick={handleCreateItem} type="submit">Add todo</button>
+                </div>
+            </form>
+
+
             <ul>
 
                 {
-                    data?.list.map(data => <TodoItemComponent key={data.id} item={data}/>)
+                    data?.list.map(data => <TodoItemComponent key={data.id} item={data} onDelete={handleItemDelete}/>)
                 }
 
             </ul>
 
-            <PaginationComponent  total={data?.meta.total || 0} perPage={data?.meta.perPage || 0} onPageChange={handlePageChange} />
+            <PaginationComponent page={data?.meta.page || 1} total={data?.meta.total || 0}
+                                 perPage={data?.meta.perPage || 0} onPageChange={handlePageChange}/>
         </div>
 
 

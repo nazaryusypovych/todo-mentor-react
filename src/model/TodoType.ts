@@ -15,6 +15,7 @@ export type todoType = {
 type todosMetaType = {
     total: number,
     perPage: number
+    page:number
 }
 
 

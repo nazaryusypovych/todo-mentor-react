@@ -3,10 +3,11 @@ import type {FC} from "react";
 
 
 type todoPropsType = {
-    item: todoType
+    item: todoType,
+    onDelete: (id: number) => void
 }
 
-const TodoItemComponent: FC <todoPropsType> = ({item}) => {
+const TodoItemComponent: FC <todoPropsType> = ({item, onDelete}) => {
     return (
         <li>
 
@@ -16,7 +17,7 @@ const TodoItemComponent: FC <todoPropsType> = ({item}) => {
                     {item.text}
                 </label>
                 <div className="todo-button">
-                    <button>delete</button>
+                    <button onClick={ ()=> onDelete(item.id)}>delete</button>
                     <button>edit</button>
                 </div>
             </div>
