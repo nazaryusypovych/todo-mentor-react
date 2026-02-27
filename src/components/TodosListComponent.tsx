@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import type {todoResponseType} from "../model/TodoType.ts";
+import type {todoResponseType, todoType} from "../model/TodoType.ts";
 import TodoItemComponent from "./TodoItemComponent.tsx";
 import {todoServices} from "../servisec/api.servisec.ts";
 import PaginationComponent from "./PaginationComponent.tsx";
@@ -26,8 +26,24 @@ const TodosListComponent = () => {
     }
 
     const handleItemDelete = (id: number) =>{
+        if(!data?.list){
+           return;
+        }
+        const filteredList = data?.list.filter(item => item.id != id);
+        setData({
+            ...data,
+            list: filteredList
+        })
+
         todoServices.deleteTodo(id).
-        then(()=>{handlePageChange(1)})
+        then(()=>{
+            console.log(data.list)
+            if(!filteredList.length){
+                if (data.meta.page> 1){
+                    handlePageChange(data.meta.page - 1)
+                }
+            }
+        })
 
     }
 
