@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import type {todoResponseType, todoType} from "../model/TodoType.ts";
+import type {todoResponseType} from "../model/TodoType.ts";
 import TodoItemComponent from "./TodoItemComponent.tsx";
 import {todoServices} from "../servisec/api.servisec.ts";
 import PaginationComponent from "./PaginationComponent.tsx";
@@ -17,6 +17,9 @@ const TodosListComponent = () => {
              .then((response) => setData(response));
     }, [])
 
+
+
+
     //Працює коли нажимаємо на кнопку
     const handlePageChange = (page: number) => {
         console.log(page);
@@ -25,10 +28,19 @@ const TodosListComponent = () => {
 
     }
 
+
+    const handleItemEdit = (id: number, newText: string) => {
+        todoServices.updateTodo(id, newText)
+
+    }
+
+
+
     const handleItemDelete = (id: number) =>{
         if(!data?.list){
            return;
         }
+
         const filteredList = data?.list.filter(item => item.id != id);
         setData({
             ...data,
@@ -71,7 +83,7 @@ const TodosListComponent = () => {
             <ul>
 
                 {
-                    data?.list.map(data => <TodoItemComponent key={data.id} item={data} onDelete={handleItemDelete}/>)
+                    data?.list.map(data => <TodoItemComponent key={data.id} item={data} onDelete={handleItemDelete} onEdit={handleItemEdit}/>)
                 }
 
             </ul>

@@ -30,5 +30,18 @@ export const todoServices = {
             body: JSON.stringify({ text })
 
         })
+    },
+
+    updateTodo: async (id: number, text: string) => {
+        return await fetch(`http://localhost:3000/todos/` + id, {
+            method: "PUT",
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ text })
+
+        })
     }
+
+
 }
