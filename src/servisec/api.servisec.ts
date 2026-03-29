@@ -6,8 +6,12 @@ import type {todoResponseType} from "../model/TodoType.ts";
 
 export const todoServices = {
     getTodos: async (page:number=1):Promise<todoResponseType> =>{
-        return await fetch(`http://localhost:3000/todos?`+ `page=` + page)
+        return await fetch(`http://localhost:3000/todos?`+ `page=` + page, {
+            headers:{
+                'api-key': 'key'}
+        })
             .then(response => response.json())
+
     },
 
     getTodo: async (id: number) =>{
